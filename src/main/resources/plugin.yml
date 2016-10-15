@@ -1,0 +1,16 @@
+main: com.perceivedev.xpskills.XPSkills
+name: XPSkills
+version: 1.0
+description: A bukkit plugin
+author: [Rayzr]
+commands:
+    xpskills:
+        description: XPSkills admin command
+        aliases: [xps]
+        usage: "Something went wrong when registering the command listener!"
+        permission: XPSkills.admin
+    skill:
+        description: XPSkills user command
+        aliases: [skills]
+        usage: "Something went wrong when registering the command listener!"
+        permission: XPSkills.user
