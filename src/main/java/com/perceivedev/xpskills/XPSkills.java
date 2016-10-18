@@ -1,27 +1,32 @@
 package com.perceivedev.xpskills;
 
 import java.io.File;
-import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 import java.util.logging.Logger;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.perceivedev.xpskills.event.Events;
+import com.perceivedev.xpskills.skills.SkillAttackDamage;
+import com.perceivedev.xpskills.skills.SkillAttackSpeed;
+import com.perceivedev.xpskills.skills.SkillHealthBoost;
+import com.perceivedev.xpskills.skills.SkillUnarmedDamage;
 
 public class XPSkills extends JavaPlugin {
 
-    private Logger       logger;
+    private Logger         logger;
 
-    private SkillManager sm;
+    private Events         events;
+    private List<Skill>    skills = Arrays.asList(new SkillAttackDamage(), new SkillAttackSpeed(), new SkillHealthBoost(), new SkillUnarmedDamage());
+
     @SuppressWarnings("unused")
-    private Events       events;
+    private CommandHandler commandHandler;
 
     @Override
     public void onEnable() {
         logger = getLogger();
-
-        sm = new SkillManager(this);
 
         // Ensure the data loads properly
         if (!load()) {
@@ -34,6 +39,9 @@ public class XPSkills extends JavaPlugin {
         }
 
         events = new Events(this);
+        skills.stream().forEach(skill -> events.registerSkill(skill));
+
+        commandHandler = new CommandHandler(this);
 
         logger.info(versionText() + " enabled");
     }
@@ -42,13 +50,6 @@ public class XPSkills extends JavaPlugin {
      * 
      */
     public boolean load() {
-        try {
-            sm.load();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
-        }
         return true;
     }
 
@@ -62,10 +63,10 @@ public class XPSkills extends JavaPlugin {
     }
 
     /**
-     * @return the skill manager
+     * @return the skills
      */
-    public SkillManager getSkillManager() {
-        return sm;
+    public List<Skill> getSkills() {
+        return skills;
     }
 
     /**

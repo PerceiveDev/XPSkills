@@ -3,6 +3,10 @@
  */
 package com.perceivedev.xpskills;
 
+import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
+import org.bukkit.event.Listener;
+
 import com.perceivedev.perceivecore.config.ConfigSerializable;
 
 /**
@@ -10,9 +14,10 @@ import com.perceivedev.perceivecore.config.ConfigSerializable;
  * 
  * @author Rayzr
  */
-public class Skill implements ConfigSerializable {
+public abstract class Skill implements ConfigSerializable, Listener {
 
-    public String name     = "<SKILL NAME>";
-    public int    maxLevel = 9001;
+    public abstract void applyEffect(int level, Player player);
+
+    public abstract String getName();
 
 }
