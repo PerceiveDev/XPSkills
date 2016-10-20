@@ -3,6 +3,7 @@ name: XPSkills
 version: 1.0
 description: A bukkit plugin
 author: [Rayzr]
+depend: [PerceiveCore]
 commands:
     xpskills:
         description: XPSkills admin command

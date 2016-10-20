@@ -30,7 +30,7 @@ public class SkillUnarmedDamage extends Skill {
      */
     @Override
     public String getName() {
-        return null;
+        return "Unarmed Damage";
     }
 
 }

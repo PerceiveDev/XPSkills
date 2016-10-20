@@ -13,19 +13,24 @@ import com.perceivedev.xpskills.Skill;
  */
 public class SkillAttackSpeed extends Skill {
 
-    /* (non-Javadoc)
-     * @see com.perceivedev.xpskills.skills.Skill#applyEffect(int, org.bukkit.entity.Player)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.perceivedev.xpskills.skills.Skill#applyEffect(int,
+     * org.bukkit.entity.Player)
      */
     @Override
     public void applyEffect(int level, Player player) {
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see com.perceivedev.xpskills.skills.Skill#getName()
      */
     @Override
     public String getName() {
-        return null;
+        return "Attack Speed";
     }
 
 }

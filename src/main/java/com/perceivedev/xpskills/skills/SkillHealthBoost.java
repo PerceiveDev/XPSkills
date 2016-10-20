@@ -30,7 +30,7 @@ public class SkillHealthBoost extends Skill {
      */
     @Override
     public String getName() {
-        return null;
+        return "Health Boost";
     }
 
 }

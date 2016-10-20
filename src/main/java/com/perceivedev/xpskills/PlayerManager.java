@@ -6,6 +6,8 @@ package com.perceivedev.xpskills;
 import java.util.HashMap;
 import java.util.UUID;
 
+import org.bukkit.entity.Player;
+
 import com.perceivedev.perceivecore.config.ConfigSerializable;
 
 /**
@@ -33,6 +35,10 @@ public class PlayerManager {
         return data.getOrDefault(id, new PlayerData(id));
     }
 
+    public PlayerData getData(Player p) {
+        return getData(p.getUniqueId());
+    }
+
     /**
      * @return the plugin
      */
@@ -42,7 +48,8 @@ public class PlayerManager {
 
     public class PlayerData implements ConfigSerializable {
 
-        private UUID id;
+        private UUID                               id;
+        private transient HashMap<String, Integer> skills = new HashMap<String, Integer>();
 
         /**
          * @param id

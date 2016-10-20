@@ -22,7 +22,7 @@ public class Events {
     public Events(XPSkills plugin) {
         this.plugin = plugin;
 
-        registerListener(new PlayerListener());
+        registerListener(new PlayerListener(plugin));
     }
 
     public void registerListener(Listener listener) {
