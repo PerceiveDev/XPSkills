@@ -14,6 +14,11 @@ public class SkillHealthBoost extends Skill {
     }
 
     @Override
+    public void removeEffect(Player player) {
+
+    }
+
+    @Override
     public String getName() {
         return "Health Boost";
     }

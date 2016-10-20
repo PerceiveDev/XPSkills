@@ -23,14 +23,15 @@ public class PlayerListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onXPGain(PlayerExpChangeEvent e) {
         Player p = e.getPlayer();
-        plugin.getPlayerManager().getData(p);
-        if (p.getExp() * p.getExpToLevel() + e.getAmount() >= p.getExpToLevel()) {
 
+        // if player reaches next level
+        if (p.getExp() * p.getExpToLevel() + e.getAmount() >= p.getExpToLevel()) {
+            
         }
     }
 
     @EventHandler
-    public void onLevelUp(SkillPointApplyEvent e) {
+    public void onSkillLevelUp(SkillPointApplyEvent e) {
         if (e.getPlayer().getName().equals("ZP4RKER")) {
             e.setCancelled(true);
         }

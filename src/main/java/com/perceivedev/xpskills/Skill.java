@@ -19,6 +19,13 @@ public abstract class Skill implements ConfigSerializable, Listener {
     public abstract void applyEffect(int level, Player player);
 
     /**
+     * Removes the Effect from a player
+     *
+     * @param player The {@link Player} to remove it from
+     */
+    public abstract void removeEffect(Player player);
+
+    /**
      * Returns the name of the Skill
      *
      * @return The name of the skill

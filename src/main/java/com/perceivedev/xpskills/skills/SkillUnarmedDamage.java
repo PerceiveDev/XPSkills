@@ -14,6 +14,11 @@ public class SkillUnarmedDamage extends Skill {
     }
 
     @Override
+    public void removeEffect(Player player) {
+
+    }
+
+    @Override
     public String getName() {
         return "Unarmed Damage";
     }

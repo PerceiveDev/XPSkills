@@ -14,6 +14,11 @@ public class SkillAttackDamage extends Skill {
     }
 
     @Override
+    public void removeEffect(Player player) {
+
+    }
+
+    @Override
     public String getName() {
         return "Attack Damage";
     }

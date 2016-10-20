@@ -24,6 +24,8 @@ public class XPSkills extends JavaPlugin {
     @SuppressWarnings("unused")
     private CommandHandler commandHandler;
 
+    private PlayerManager playerManager;
+
     @Override
     public void onEnable() {
         logger = getLogger();
@@ -42,13 +44,11 @@ public class XPSkills extends JavaPlugin {
         skills.forEach(skill -> events.registerSkill(skill));
 
         commandHandler = new CommandHandler(this);
-
+        playerManager = new PlayerManager(this);
+        
         logger.info(versionText() + " enabled");
     }
 
-    /**
-     * 
-     */
     public boolean load() {
         return true;
     }

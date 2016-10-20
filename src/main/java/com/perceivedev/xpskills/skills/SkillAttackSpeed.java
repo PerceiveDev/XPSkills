@@ -14,6 +14,11 @@ public class SkillAttackSpeed extends Skill {
     }
 
     @Override
+    public void removeEffect(Player player) {
+
+    }
+
+    @Override
     public String getName() {
         return null;
     }
