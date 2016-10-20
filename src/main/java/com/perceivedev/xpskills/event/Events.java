@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.perceivedev.xpskills.event;
 
 import org.bukkit.event.Listener;
@@ -9,15 +6,14 @@ import com.perceivedev.xpskills.Skill;
 import com.perceivedev.xpskills.XPSkills;
 
 /**
- * @author Rayzr
- *
+ * Contains all 
  */
 public class Events {
 
     private XPSkills plugin;
 
     /**
-     * @param xpSkills
+     * @param plugin The {@link XPSkills} plugin instance
      */
     public Events(XPSkills plugin) {
         this.plugin = plugin;

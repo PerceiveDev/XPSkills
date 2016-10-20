@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.perceivedev.xpskills.api;
 
 import org.bukkit.entity.Player;
@@ -11,16 +8,15 @@ import org.bukkit.event.HandlerList;
 import com.perceivedev.xpskills.skills.SkillType;
 
 /**
- * @author Rayzr
- *
+ * Called when a skill point is applied
  */
 public class SkillPointApplyEvent extends Event implements Cancellable {
 
     private static HandlerList handlers = new HandlerList();
-    private Player             player;
-    private SkillType          skill;
-    private int                level;
-    private boolean            cancelled;
+    private Player    player;
+    private SkillType skill;
+    private int       level;
+    private boolean   cancelled;
 
     public SkillPointApplyEvent(Player player, SkillType skill, int level) {
         this.player = player;
@@ -63,35 +59,27 @@ public class SkillPointApplyEvent extends Event implements Cancellable {
         return player;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.bukkit.event.Event#getHandlers()
-     */
     @Override
     public HandlerList getHandlers() {
         return handlers;
     }
 
+    // TODO: 20.10.2016 Quite sure this was needed in the past 
+
+    /**
+     * Returns the {@link HandlerList}
+     *
+     * @return The {@link HandlerList}
+     */
     public static HandlerList getHandlerList() {
         return handlers;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.bukkit.event.Cancellable#isCancelled()
-     */
     @Override
     public boolean isCancelled() {
         return cancelled;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.bukkit.event.Cancellable#setCancelled(boolean)
-     */
     @Override
     public void setCancelled(boolean cancelled) {
         this.cancelled = cancelled;

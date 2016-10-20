@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.perceivedev.xpskills.event;
 
 import org.bukkit.entity.Player;
@@ -13,8 +10,7 @@ import com.perceivedev.xpskills.XPSkills;
 import com.perceivedev.xpskills.api.SkillPointApplyEvent;
 
 /**
- * @author Rayzr
- *
+ * Listens to Player related events
  */
 public class PlayerListener implements Listener {
 

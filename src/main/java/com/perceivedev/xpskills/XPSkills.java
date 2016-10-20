@@ -21,20 +21,12 @@ public class XPSkills extends JavaPlugin {
     private Events         events;
     private List<Skill>    skills = Arrays.asList(new SkillAttackDamage(), new SkillAttackSpeed(), new SkillHealthBoost(), new SkillUnarmedDamage());
 
-    private PlayerManager  playerManager;
-
     @SuppressWarnings("unused")
     private CommandHandler commandHandler;
 
     @Override
     public void onEnable() {
         logger = getLogger();
-
-        events = new Events(this);
-        skills.stream().forEach(skill -> events.registerSkill(skill));
-
-        playerManager = new PlayerManager(this);
-        commandHandler = new CommandHandler(this);
 
         // Ensure the data loads properly
         if (!load()) {
@@ -45,6 +37,11 @@ public class XPSkills extends JavaPlugin {
             Bukkit.getPluginManager().disablePlugin(this);
             return;
         }
+
+        events = new Events(this);
+        skills.forEach(skill -> events.registerSkill(skill));
+
+        commandHandler = new CommandHandler(this);
 
         logger.info(versionText() + " enabled");
     }
@@ -78,13 +75,6 @@ public class XPSkills extends JavaPlugin {
      */
     public File getFile(String path) {
         return new File(getDataFolder(), path.replace("/", File.pathSeparator));
-    }
-
-    /**
-     * @return
-     */
-    public PlayerManager getPlayerManager() {
-        return playerManager;
     }
 
 }

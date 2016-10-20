@@ -1,69 +1,60 @@
-/**
- * 
- */
 package com.perceivedev.xpskills;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
-
-import org.bukkit.entity.Player;
 
 import com.perceivedev.perceivecore.config.ConfigSerializable;
 
 /**
- * @author Rayzr
- *
+ * Manages the players. Contains data about them
  */
 public class PlayerManager {
 
-    private HashMap<UUID, PlayerData> data = new HashMap<UUID, PlayerData>();
+    private HashMap<UUID, PlayerData> data = new HashMap<>();
 
-    private XPSkills                  plugin;
+    private XPSkills plugin;
 
+    /**
+     * Creates a new PlayerManager for the plugin
+     *
+     * @param plugin The {@link XPSkills} plugin
+     */
     public PlayerManager(XPSkills plugin) {
         this.plugin = plugin;
     }
 
     /**
-     * @return the data
+     * Returns all data about all players.
+     *
+     * @return the data. Unmodifiable.
      */
-    public HashMap<UUID, PlayerData> getData() {
-        return data;
-    }
-
-    public PlayerData getData(UUID id) {
-        return data.getOrDefault(id, new PlayerData(id));
-    }
-
-    public PlayerData getData(Player p) {
-        return getData(p.getUniqueId());
+    public Map<UUID, PlayerData> getData() {
+        return Collections.unmodifiableMap(data);
     }
 
     /**
-     * @return the plugin
+     * Returns the {@link PlayerData} for the player.
+     * <p>
+     * Will create a new one if needed.
+     *
+     * @param id The {@link UUID} of the player
+     *
+     * @return The {@link PlayerData} for the player
      */
-    public XPSkills getPlugin() {
-        return plugin;
+    public PlayerData getData(UUID id) {
+        if (data.containsKey(id)) {
+            return data.get(id);
+        }
+        data.put(id, new PlayerData());
+        return data.get(id);
     }
 
-    public class PlayerData implements ConfigSerializable {
-
-        private UUID                               id;
-        private transient HashMap<String, Integer> skills = new HashMap<String, Integer>();
-
-        /**
-         * @param id
-         */
-        public PlayerData(UUID id) {
-            this.id = id;
-        }
-
-        /**
-         * @return the id
-         */
-        public UUID getId() {
-            return id;
-        }
+    /**
+     * A class holding data about the player
+     */
+    public static class PlayerData implements ConfigSerializable {
 
     }
 
