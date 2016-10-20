@@ -30,8 +30,7 @@ public class Events {
     }
 
     /**
-     * @param <T>
-     * @param skillAttackDamage
+     * @param skill
      */
     public void registerSkill(Skill skill) {
         // TODO: Do something more here?
