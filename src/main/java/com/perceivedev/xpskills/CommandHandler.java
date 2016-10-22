@@ -12,6 +12,7 @@ import org.bukkit.entity.Player;
 
 import com.perceivedev.perceivecore.gui.GUI;
 import com.perceivedev.perceivecore.gui.component.Label;
+import com.perceivedev.xpskills.skills.Skill;
 
 /**
  * @author Rayzr

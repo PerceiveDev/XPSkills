@@ -2,8 +2,8 @@ package com.perceivedev.xpskills.event;
 
 import org.bukkit.event.Listener;
 
-import com.perceivedev.xpskills.Skill;
 import com.perceivedev.xpskills.XPSkills;
+import com.perceivedev.xpskills.skills.Skill;
 
 /**
  * Contains all 

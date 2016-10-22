@@ -9,17 +9,23 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.perceivedev.xpskills.event.Events;
-import com.perceivedev.xpskills.skills.SkillAttackDamage;
-import com.perceivedev.xpskills.skills.SkillAttackSpeed;
-import com.perceivedev.xpskills.skills.SkillHealthBoost;
-import com.perceivedev.xpskills.skills.SkillUnarmedDamage;
+import com.perceivedev.xpskills.skills.Skill;
+import com.perceivedev.xpskills.skills.implementation.SkillAttackDamage;
+import com.perceivedev.xpskills.skills.implementation.SkillAttackSpeed;
+import com.perceivedev.xpskills.skills.implementation.SkillHealthBoost;
+import com.perceivedev.xpskills.skills.implementation.SkillUnarmedDamage;
 
 public class XPSkills extends JavaPlugin {
 
-    private Logger         logger;
+    private Logger logger;
 
-    private Events         events;
-    private List<Skill>    skills = Arrays.asList(new SkillAttackDamage(), new SkillAttackSpeed(), new SkillHealthBoost(), new SkillUnarmedDamage());
+    private Events events;
+    private List<Skill> skills = Arrays.asList(
+              new SkillAttackDamage(200, 0.1, 20),
+              new SkillAttackSpeed(200, 0.1, 20),
+              new SkillHealthBoost(200, 0.01, 10),
+              new SkillUnarmedDamage(200, 0.01, 20)
+    );
 
     @SuppressWarnings("unused")
     private CommandHandler commandHandler;
@@ -45,7 +51,7 @@ public class XPSkills extends JavaPlugin {
 
         commandHandler = new CommandHandler(this);
         playerManager = new PlayerManager(this);
-        
+
         logger.info(versionText() + " enabled");
     }
 
@@ -71,6 +77,7 @@ public class XPSkills extends JavaPlugin {
 
     /**
      * @param path the path to the file (from inside the plugin's data folder)
+     *
      * @return the File
      */
     public File getFile(String path) {
