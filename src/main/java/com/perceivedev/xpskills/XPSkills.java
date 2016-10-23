@@ -8,7 +8,7 @@ import java.util.logging.Logger;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.perceivedev.xpskills.event.Events;
+import com.perceivedev.xpskills.event.PlayerListener;
 import com.perceivedev.xpskills.managment.PlayerManager;
 import com.perceivedev.xpskills.managment.SkillManager;
 import com.perceivedev.xpskills.skills.Skill;
@@ -21,7 +21,6 @@ public class XPSkills extends JavaPlugin {
 
     private Logger logger;
 
-    private Events events;
     private List<Skill> skills = Arrays.asList(
               new SkillAttackDamage(200, 0.1, 20),
               new SkillAttackSpeed(200, 0.1, 20),
@@ -49,14 +48,12 @@ public class XPSkills extends JavaPlugin {
             return;
         }
 
-        events = new Events(this);
-        skills.forEach(skill -> events.registerSkill(skill));
-
         skillManager = new SkillManager();
         playerManager = new PlayerManager(this);
-        
+
         commandHandler = new CommandHandler(this);
 
+        Bukkit.getPluginManager().registerEvents(new PlayerListener(this), this);
         logger.info(versionText() + " enabled");
     }
 

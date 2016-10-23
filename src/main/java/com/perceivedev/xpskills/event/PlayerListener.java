@@ -1,5 +1,6 @@
 package com.perceivedev.xpskills.event;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -8,9 +9,13 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerExpChangeEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
 
+import com.perceivedev.perceivecore.PerceiveCore;
+import com.perceivedev.perceivecore.guisystem.Stage;
 import com.perceivedev.perceivecore.util.TextUtils;
 import com.perceivedev.xpskills.XPSkills;
 import com.perceivedev.xpskills.api.SkillPointApplyEvent;
+import com.perceivedev.xpskills.api.SkillPointGainEvent;
+import com.perceivedev.xpskills.gui.PlayerSkillPointGui;
 import com.perceivedev.xpskills.managment.PlayerManager;
 import com.perceivedev.xpskills.skills.SkillType;
 
@@ -31,12 +36,18 @@ public class PlayerListener implements Listener {
 
         // if player reaches next level award skill points
         if (p.getExp() * p.getExpToLevel() + e.getAmount() >= p.getExpToLevel()) {
-            plugin.getPlayerManager()
-                      .getData(p.getUniqueId())
-                      .giveFreeSkillPoints(1);
+            SkillPointGainEvent event = new SkillPointGainEvent(p, 1);
+            Bukkit.getPluginManager().callEvent(event);
+            if (event.isCancelled()) {
+                p.sendMessage(TextUtils.colorize("&6You were &cnot &6given &a%d &6skill points!"));
+            } else {
+                plugin.getPlayerManager()
+                          .getData(p.getUniqueId())
+                          .giveFreeSkillPoints(1);
 
-            // TODO: 23.10.2016 Send message? 
-            p.sendMessage(TextUtils.colorize(String.format("&6You were given &a%d &6skill points!", 1)));
+                // TODO: 23.10.2016 Send message? 
+                p.sendMessage(TextUtils.colorize(String.format("&6You were given &a%d &6skill points!", 1)));
+            }
         }
     }
 
@@ -63,6 +74,14 @@ public class PlayerListener implements Listener {
         if (e.getPlayer().getName().equals("ZP4RKER")) {
             e.setCancelled(true);
         }
+    }
+
+    @EventHandler
+    public void onGainPoint(SkillPointGainEvent e) {
+        System.out.println("PlayerListener.onGainPoint() + " + e);
+        Stage stage = new Stage(new PlayerSkillPointGui(e.getPlayer().getUniqueId()), e.getPlayer().getUniqueId());
+        PerceiveCore.getInstance().getPlayerGuiManager().addStage(e.getPlayer().getUniqueId(), stage);
+        PerceiveCore.getInstance().getPlayerGuiManager().openFirstStage(e.getPlayer().getUniqueId());
     }
 
 }
