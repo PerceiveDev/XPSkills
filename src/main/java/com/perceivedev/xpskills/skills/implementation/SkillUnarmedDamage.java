@@ -12,6 +12,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageModifier;
 import org.bukkit.inventory.ItemStack;
 
+import com.perceivedev.perceivecore.util.TextUtils;
 import com.perceivedev.xpskills.skills.types.AbstractSkill;
 
 /**
@@ -56,17 +57,16 @@ public class SkillUnarmedDamage extends AbstractSkill {
 
         double increase = getApplyingIncrease(managedPlayers.get(event.getDamager().getUniqueId())) + 1;
 
+        double dmgBefore = event.getDamage();
         event.setDamage(DamageModifier.BASE, event.getDamage() * increase);
 
-        event.getDamager().sendMessage("["
-                  + getIdentifier()
-                  + "] Applied level: "
-                  + managedPlayers.get(event.getDamager().getUniqueId())
-                  + " with an increase of "
-                  + increase
-                  + " totaling to "
-                  + event.getDamage()
-        );
+        event.getDamager().sendMessage(TextUtils.colorize(String.format(
+                  "&8[&7%s&8, &7%d&8] &c%.2f &8(&2+ &a%.2f&8)",
+                  getIdentifier(),
+                  managedPlayers.get(event.getDamager().getUniqueId()),
+                  event.getDamage(),
+                  event.getDamage() - dmgBefore
+        )));
     }
 
     /**

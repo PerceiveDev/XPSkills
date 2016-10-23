@@ -9,6 +9,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.perceivedev.xpskills.event.Events;
+import com.perceivedev.xpskills.managment.PlayerManager;
+import com.perceivedev.xpskills.managment.SkillManager;
 import com.perceivedev.xpskills.skills.Skill;
 import com.perceivedev.xpskills.skills.implementation.SkillAttackDamage;
 import com.perceivedev.xpskills.skills.implementation.SkillAttackSpeed;
@@ -31,6 +33,7 @@ public class XPSkills extends JavaPlugin {
     private CommandHandler commandHandler;
 
     private PlayerManager playerManager;
+    private SkillManager  skillManager;
 
     @Override
     public void onEnable() {
@@ -49,8 +52,10 @@ public class XPSkills extends JavaPlugin {
         events = new Events(this);
         skills.forEach(skill -> events.registerSkill(skill));
 
-        commandHandler = new CommandHandler(this);
+        skillManager = new SkillManager();
         playerManager = new PlayerManager(this);
+        
+        commandHandler = new CommandHandler(this);
 
         logger.info(versionText() + " enabled");
     }
@@ -69,10 +74,17 @@ public class XPSkills extends JavaPlugin {
     }
 
     /**
-     * @return the skills
+     * @return The Current SkillManager
      */
-    public List<Skill> getSkills() {
-        return skills;
+    public SkillManager getSkillManager() {
+        return skillManager;
+    }
+
+    /**
+     * @return The current {@link PlayerManager}
+     */
+    public PlayerManager getPlayerManager() {
+        return playerManager;
     }
 
     /**

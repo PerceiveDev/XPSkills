@@ -1,8 +1,9 @@
 /**
- * 
+ *
  */
 package com.perceivedev.xpskills;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.command.Command;
@@ -16,7 +17,6 @@ import com.perceivedev.xpskills.skills.Skill;
 
 /**
  * @author Rayzr
- *
  */
 public class CommandHandler implements CommandExecutor {
 
@@ -28,7 +28,7 @@ public class CommandHandler implements CommandExecutor {
         this.plugin = plugin;
         gui = new GUI("Skills", 6);
 
-        List<Skill> skills = plugin.getSkills();
+        List<Skill> skills = new ArrayList<>(plugin.getSkillManager().getSkills().values());
         for (int i = 0; i < skills.size(); i++) {
             Skill skill = skills.get(i);
             gui.addComponent(new Label("&cSkill: &a" + skill.getName(), "Blah blah blah", "Some text here"), i % 9, i / 9);

@@ -8,9 +8,11 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerExpChangeEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
 
+import com.perceivedev.perceivecore.util.TextUtils;
 import com.perceivedev.xpskills.XPSkills;
 import com.perceivedev.xpskills.api.SkillPointApplyEvent;
-import com.perceivedev.xpskills.skills.Skill;
+import com.perceivedev.xpskills.managment.PlayerManager;
+import com.perceivedev.xpskills.skills.SkillType;
 
 /**
  * Listens to Player related events
@@ -27,17 +29,24 @@ public class PlayerListener implements Listener {
     public void onXPGain(PlayerExpChangeEvent e) {
         Player p = e.getPlayer();
 
-        // if player reaches next level
+        // if player reaches next level award skill points
         if (p.getExp() * p.getExpToLevel() + e.getAmount() >= p.getExpToLevel()) {
+            plugin.getPlayerManager()
+                      .getData(p.getUniqueId())
+                      .giveFreeSkillPoints(1);
 
+            // TODO: 23.10.2016 Send message? 
+            p.sendMessage(TextUtils.colorize(String.format("&6You were given &a%d &6skill points!", 1)));
         }
     }
 
     @EventHandler
     public void onHit(PlayerToggleSneakEvent event) {
         if (event.isSneaking()) {
-            for (Skill skill : plugin.getSkills()) {
-                skill.applyEffect(event.getPlayer().getLevel(), event.getPlayer());
+            PlayerManager.PlayerData data = plugin.getPlayerManager().getData(event.getPlayer().getUniqueId());
+
+            for (SkillType skill : plugin.getSkillManager().getSkills().keySet()) {
+                data.setSkill(skill, event.getPlayer().getLevel());
             }
         }
     }
@@ -45,7 +54,7 @@ public class PlayerListener implements Listener {
     @EventHandler
     public void onDamage(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Player) {
-            System.out.println(event.getDamage());
+            System.out.println("Base damage dealt: " + event.getDamage());
         }
     }
 

@@ -6,6 +6,8 @@ import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.entity.Player;
 
+import com.perceivedev.perceivecore.util.TextUtils;
+
 /**
  * A skill that changes an attribute
  */
@@ -43,7 +45,13 @@ public class AttributeModifyingSkill extends AbstractSkill {
                   )
         );
         // TODO: 22.10.2016 Remove 
-        player.sendMessage("[" + getIdentifier() + "] Applied level: " + level + " with an increase of " + increase);
+        player.sendMessage(TextUtils.colorize(String.format(
+                  "&8[&7%s&8, &7%d&8] &c%.2f &8(&2+ &a%.2f&8)",
+                  getIdentifier(),
+                  level,
+                  player.getAttribute(ATTRIBUTE).getValue(),
+                  increase
+        )));
     }
 
     @Override
