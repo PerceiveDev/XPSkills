@@ -8,6 +8,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerExpChangeEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import com.perceivedev.perceivecore.PerceiveCore;
 import com.perceivedev.perceivecore.guisystem.Stage;
@@ -78,10 +79,15 @@ public class PlayerListener implements Listener {
 
     @EventHandler
     public void onGainPoint(SkillPointGainEvent e) {
-        System.out.println("PlayerListener.onGainPoint() + " + e);
-        Stage stage = new Stage(new PlayerSkillPointGui(e.getPlayer().getUniqueId()), e.getPlayer().getUniqueId());
-        PerceiveCore.getInstance().getPlayerGuiManager().addStage(e.getPlayer().getUniqueId(), stage);
-        PerceiveCore.getInstance().getPlayerGuiManager().openFirstStage(e.getPlayer().getUniqueId());
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                System.out.println("PlayerListener.onGainPoint() + " + e);
+                Stage stage = new Stage(new PlayerSkillPointGui(e.getPlayer().getUniqueId()), e.getPlayer().getUniqueId());
+                PerceiveCore.getInstance().getPlayerGuiManager().addStage(e.getPlayer().getUniqueId(), stage);
+                PerceiveCore.getInstance().getPlayerGuiManager().openFirstStage(e.getPlayer().getUniqueId());
+            }
+        }.runTaskLater(plugin, 20L);
     }
 
 }

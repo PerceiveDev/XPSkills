@@ -244,6 +244,7 @@ public class PlayerManager {
         }
 
         // TODO: 23.10.2016 Give Skill points here? 
+        // TODO: 23.10.2016 LEVEL!!! 
 
         /**
          * Increases the level

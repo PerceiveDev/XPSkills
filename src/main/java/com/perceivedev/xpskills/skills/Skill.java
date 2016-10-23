@@ -2,6 +2,7 @@ package com.perceivedev.xpskills.skills;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
+import org.bukkit.inventory.ItemStack;
 
 import com.perceivedev.perceivecore.config.ConfigSerializable;
 
@@ -38,6 +39,22 @@ public interface Skill extends ConfigSerializable, Listener {
      * @return The max level of the skill
      */
     int getMaxLevel();
+
+    /**
+     * Describes the skill in short
+     *
+     * @param level The level of the skill
+     *
+     * @return A short explanation what the skill does at that level
+     */
+    String describeYourself(int level);
+
+    /**
+     * Returns the icon for this skill
+     *
+     * @return The icon for this Skill
+     */
+    ItemStack getIcon();
 
     default String getIdentifier() {
         return getName().toLowerCase().replace(" ", "_");

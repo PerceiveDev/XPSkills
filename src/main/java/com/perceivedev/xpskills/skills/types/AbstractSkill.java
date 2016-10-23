@@ -1,5 +1,9 @@
 package com.perceivedev.xpskills.skills.types;
 
+import java.util.function.BiFunction;
+
+import org.bukkit.inventory.ItemStack;
+
 import com.perceivedev.xpskills.skills.Skill;
 
 /**
@@ -7,22 +11,28 @@ import com.perceivedev.xpskills.skills.Skill;
  */
 public abstract class AbstractSkill implements Skill {
 
-    private int    maxLevel;
-    private double increasePerLevel;
-    private double increaseCap;
-    private String name;
+    private int                                        maxLevel;
+    private double                                     increasePerLevel;
+    private double                                     increaseCap;
+    private String                                     name;
+    private BiFunction<AbstractSkill, Integer, String> descriptionFunction;
+    private ItemStack                                  icon;
 
     /**
      * @param maxLevel The max level of the skill
      * @param name The name of the skill
      * @param increaseCap The maximum increase
      * @param increasePerLevel The increase per level
+     * @param descriptionFunction A function generating a String describing the skill.
      */
-    public AbstractSkill(int maxLevel, String name, double increasePerLevel, double increaseCap) {
+    public AbstractSkill(int maxLevel, String name, double increasePerLevel, double increaseCap,
+              BiFunction<AbstractSkill, Integer, String> descriptionFunction, ItemStack icon) {
         this.maxLevel = maxLevel;
         this.name = name;
         this.increaseCap = increaseCap;
         this.increasePerLevel = increasePerLevel;
+        this.descriptionFunction = descriptionFunction;
+        this.icon = icon.clone();
     }
 
     /**
@@ -58,5 +68,15 @@ public abstract class AbstractSkill implements Skill {
     @Override
     public String getName() {
         return name;
+    }
+
+    @Override
+    public String describeYourself(int level) {
+        return descriptionFunction.apply(this, level);
+    }
+
+    @Override
+    public ItemStack getIcon() {
+        return icon.clone();
     }
 }

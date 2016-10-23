@@ -5,6 +5,7 @@ import java.util.UUID;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import com.perceivedev.perceivecore.util.TextUtils;
 
@@ -23,9 +24,18 @@ public class AttributeModifyingSkill extends AbstractSkill {
      * @param increasePerLevel The increase per level
      * @param attribute The attribute to modify
      * @param modifierId The UUID of this modifier. Must be consistent.
+     * @param formatString The format String for {@link #describeYourself(int)}. First param is the level, second the increase
+     * @param icon The Icon for this Skill
      */
-    public AttributeModifyingSkill(int maxLevel, String name, double increasePerLevel, double increaseCap, Attribute attribute, UUID modifierId) {
-        super(maxLevel, name, increasePerLevel, increaseCap);
+    public AttributeModifyingSkill(int maxLevel, String name, double increasePerLevel, double increaseCap, Attribute attribute, UUID modifierId,
+              String formatString, ItemStack icon) {
+        super(maxLevel,
+                  name,
+                  increasePerLevel,
+                  increaseCap,
+                  (abstractSkill, level) -> String.format(formatString, level, Math.min(level * increasePerLevel, increaseCap)),
+                  icon);
+
         this.ATTRIBUTE = attribute;
         this.MODIFIER_ID = modifierId;
     }

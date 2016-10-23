@@ -12,6 +12,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageModifier;
 import org.bukkit.inventory.ItemStack;
 
+import com.perceivedev.perceivecore.util.ItemFactory;
 import com.perceivedev.perceivecore.util.TextUtils;
 import com.perceivedev.xpskills.skills.types.AbstractSkill;
 
@@ -28,7 +29,9 @@ public class SkillUnarmedDamage extends AbstractSkill {
      * @param increaseCap The maximum increase
      */
     public SkillUnarmedDamage(int maxLevel, double increasePerLevel, double increaseCap) {
-        super(maxLevel, "Unarmed Damage", increasePerLevel, increaseCap);
+        super(maxLevel, "Unarmed Damage", increasePerLevel, increaseCap,
+                  (skill, level) -> String.format("&7Unarmed: &6%d &7(&e+ %.2f %% &7Damage)", level, Math.min(level * increasePerLevel, increaseCap)),
+                  ItemFactory.builder(Material.SKULL_ITEM).setDurability((short) 2).build());
     }
 
     @Override
