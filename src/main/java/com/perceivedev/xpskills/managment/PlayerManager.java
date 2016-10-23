@@ -67,6 +67,7 @@ public class PlayerManager {
         private Map<SkillType, Integer> skillMap = new HashMap<>();
 
         private int freeSkillPoints;
+        private int level;
 
         /**
          * @param playerID The {@link UUID} of the player
@@ -223,6 +224,35 @@ public class PlayerManager {
             freeSkillPoints = totalSkillPoints;
         }
         //</editor-fold>
+
+        /**
+         * Returns the level of the player
+         *
+         * @return The current level of the Player
+         */
+        public int getLevel() {
+            return level;
+        }
+
+        /**
+         * Sets the new level of the player
+         *
+         * @param level The new level of the player
+         */
+        public void setLevel(int level) {
+            this.level = level;
+        }
+
+        // TODO: 23.10.2016 Give Skill points here? 
+
+        /**
+         * Increases the level
+         *
+         * @param amount The amount to increase the level by
+         */
+        public void increaseLevel(int amount) {
+            level += amount;
+        }
 
         /**
          * @return The player if he is online
