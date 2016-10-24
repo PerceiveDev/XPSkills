@@ -22,7 +22,8 @@ public class PlayerManager {
 
     private HashMap<UUID, PlayerData> data = new HashMap<>();
 
-    private XPSkills plugin;
+    @SuppressWarnings("unused")
+    private XPSkills                  plugin;
 
     /**
      * Creates a new PlayerManager for the plugin
@@ -63,11 +64,11 @@ public class PlayerManager {
      * A class holding data about the player
      */
     public static class PlayerData implements ConfigSerializable {
-        private UUID playerID;
+        private UUID                    playerID;
         private Map<SkillType, Integer> skillMap = new HashMap<>();
 
-        private int freeSkillPoints;
-        private int level;
+        private int                     freeSkillPoints;
+        private int                     level;
 
         /**
          * @param playerID The {@link UUID} of the player
@@ -76,7 +77,7 @@ public class PlayerManager {
             this.playerID = playerID;
         }
 
-        //<editor-fold desc="Skill adding, removing and querying">
+        // <editor-fold desc="Skill adding, removing and querying">
 
         /**
          * Sets the skill level for the player. Ignores skill points.
@@ -109,7 +110,8 @@ public class PlayerManager {
         }
 
         /**
-         * Increases the skill by the given level and decreases the {@link #getFreeSkillPoints()} accordingly.
+         * Increases the skill by the given level and decreases the
+         * {@link #getFreeSkillPoints()} accordingly.
          *
          * @param skillType The {@link SkillType} of the skill
          * @param levelIncrease The level of the skill
@@ -174,9 +176,9 @@ public class PlayerManager {
             }
             return OptionalInt.empty();
         }
-        //</editor-fold>
+        // </editor-fold>
 
-        //<editor-fold desc="Skill point handling">
+        // <editor-fold desc="Skill point handling">
 
         /**
          * Returns the amount of skill points the player can spend
@@ -208,14 +210,12 @@ public class PlayerManager {
         /**
          * Resets all skill points.
          * <p>
-         * This means it removes all skills and sets the {@link #getFreeSkillPoints()} to what it was according to the applied skill levels
+         * This means it removes all skills and sets the
+         * {@link #getFreeSkillPoints()} to what it was according to the applied
+         * skill levels
          */
         public void resetSkillPoints() {
-            int totalSkillPoints = skillMap.values()
-                      .stream()
-                      .mapToInt(Integer::intValue)
-                      .max()
-                      .orElse(0);
+            int totalSkillPoints = skillMap.values().stream().mapToInt(Integer::intValue).max().orElse(0);
 
             for (SkillType skillType : SkillType.values()) {
                 removeSkill(skillType);
@@ -223,7 +223,7 @@ public class PlayerManager {
 
             freeSkillPoints = totalSkillPoints;
         }
-        //</editor-fold>
+        // </editor-fold>
 
         /**
          * Returns the level of the player
@@ -243,8 +243,8 @@ public class PlayerManager {
             this.level = level;
         }
 
-        // TODO: 23.10.2016 Give Skill points here? 
-        // TODO: 23.10.2016 LEVEL!!! 
+        // TODO: 23.10.2016 Give Skill points here?
+        // TODO: 23.10.2016 LEVEL!!!
 
         /**
          * Increases the level

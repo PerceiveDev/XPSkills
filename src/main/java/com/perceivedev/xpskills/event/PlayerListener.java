@@ -10,8 +10,6 @@ import org.bukkit.event.player.PlayerExpChangeEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import com.perceivedev.perceivecore.PerceiveCore;
-import com.perceivedev.perceivecore.guisystem.Stage;
 import com.perceivedev.perceivecore.util.TextUtils;
 import com.perceivedev.xpskills.XPSkills;
 import com.perceivedev.xpskills.api.SkillPointApplyEvent;
@@ -42,11 +40,9 @@ public class PlayerListener implements Listener {
             if (event.isCancelled()) {
                 p.sendMessage(TextUtils.colorize("&6You were &cnot &6given &a%d &6skill points!"));
             } else {
-                plugin.getPlayerManager()
-                          .getData(p.getUniqueId())
-                          .giveFreeSkillPoints(1);
+                plugin.getPlayerManager().getData(p.getUniqueId()).giveFreeSkillPoints(1);
 
-                // TODO: 23.10.2016 Send message? 
+                // TODO: 23.10.2016 Send message?
                 p.sendMessage(TextUtils.colorize(String.format("&6You were given &a%d &6skill points!", 1)));
             }
         }
@@ -83,9 +79,7 @@ public class PlayerListener implements Listener {
             @Override
             public void run() {
                 System.out.println("PlayerListener.onGainPoint() + " + e);
-                Stage stage = new Stage(new PlayerSkillPointGui(e.getPlayer().getUniqueId()), e.getPlayer().getUniqueId());
-                PerceiveCore.getInstance().getPlayerGuiManager().addStage(e.getPlayer().getUniqueId(), stage);
-                PerceiveCore.getInstance().getPlayerGuiManager().openFirstStage(e.getPlayer().getUniqueId());
+                new PlayerSkillPointGui(e.getPlayer().getUniqueId()).open(e.getPlayer());
             }
         }.runTaskLater(plugin, 20L);
     }

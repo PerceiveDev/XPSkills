@@ -1,8 +1,6 @@
 package com.perceivedev.xpskills;
 
 import java.io.File;
-import java.util.Arrays;
-import java.util.List;
 import java.util.logging.Logger;
 
 import org.bukkit.Bukkit;
@@ -11,32 +9,24 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.perceivedev.xpskills.event.PlayerListener;
 import com.perceivedev.xpskills.managment.PlayerManager;
 import com.perceivedev.xpskills.managment.SkillManager;
-import com.perceivedev.xpskills.skills.Skill;
-import com.perceivedev.xpskills.skills.implementation.SkillAttackDamage;
-import com.perceivedev.xpskills.skills.implementation.SkillAttackSpeed;
-import com.perceivedev.xpskills.skills.implementation.SkillHealthBoost;
-import com.perceivedev.xpskills.skills.implementation.SkillUnarmedDamage;
 
 public class XPSkills extends JavaPlugin {
 
-    private Logger logger;
+    private static XPSkills instance = null;
 
-    private List<Skill> skills = Arrays.asList(
-              new SkillAttackDamage(200, 0.1, 20),
-              new SkillAttackSpeed(200, 0.1, 20),
-              new SkillHealthBoost(200, 0.01, 10),
-              new SkillUnarmedDamage(200, 0.01, 20)
-    );
+    private Logger          logger;
 
     @SuppressWarnings("unused")
-    private CommandHandler commandHandler;
+    private CommandHandler  commandHandler;
 
-    private PlayerManager playerManager;
-    private SkillManager  skillManager;
+    private PlayerManager   playerManager;
+    private SkillManager    skillManager;
 
     @Override
     public void onEnable() {
         logger = getLogger();
+
+        instance = this;
 
         // Ensure the data loads properly
         if (!load()) {
@@ -58,11 +48,14 @@ public class XPSkills extends JavaPlugin {
     }
 
     public boolean load() {
+        // TODO: Load configs n' stuff
         return true;
     }
 
     @Override
     public void onDisable() {
+        instance = null;
+
         logger.info(versionText() + " disabled");
     }
 
@@ -91,6 +84,13 @@ public class XPSkills extends JavaPlugin {
      */
     public File getFile(String path) {
         return new File(getDataFolder(), path.replace("/", File.pathSeparator));
+    }
+
+    /**
+     * @return the current instance of this plugin
+     */
+    public static XPSkills getInstance() {
+        return instance;
     }
 
 }
