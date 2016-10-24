@@ -38,6 +38,7 @@ public class PlayerListener implements Listener {
             SkillPointGainEvent event = new SkillPointGainEvent(p, 1);
             Bukkit.getPluginManager().callEvent(event);
             if (event.isCancelled()) {
+                // TODO: 24.10.2016 Remove?
                 p.sendMessage(TextUtils.colorize("&6You were &cnot &6given &a%d &6skill points!"));
             } else {
                 plugin.getPlayerManager().getData(p.getUniqueId()).giveFreeSkillPoints(1);
