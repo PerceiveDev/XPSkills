@@ -65,9 +65,17 @@ public class PlayerSkillPointGui extends GUI {
     }
 
     private Button createPlayerButton(PlayerData playerData, Entry<SkillType, Skill> skillEntry) {
-        // TODO: Make these buttons _do_ something
-        return (Button) new Button(TextUtils.colorize(skillEntry.getValue().describeYourself(playerData.getSkillLevel(skillEntry.getKey()).orElse(0))))
-                .setDisplayType(DisplayType.custom(skillEntry.getValue().getIcon()));
+        Button button = new Button(TextUtils.colorize(skillEntry.getValue().describeYourself(playerData.getSkillLevel(skillEntry.getKey()).orElse(0))));
+        button.setDisplayType(DisplayType.custom(skillEntry.getValue().getIcon()));
+        button.setClickHandler((e) -> {
+            int amount;
+            if ((amount = playerData.useSkillPoint(e, skillEntry.getKey())) < 1) {
+                // TODO: I swear, we really need to set up some translations...
+                // this is UGLY AS FRACK
+                playerData.getPlayer().ifPresent(player -> player.sendMessage(TextUtils.colorize(String.format("&7Leveled &6%s &7up &6%d &7times", skillEntry.getValue().getName(), amount))));
+            }
+        });
+        return button;
     }
 
     private Label createPlayerStats(PlayerData playerData) {
@@ -83,7 +91,7 @@ public class PlayerSkillPointGui extends GUI {
 
         itemFactory.addLore(" ");
 
-        for (Entry<SkillType, Skill> entry : XPSkills.getPlugin(XPSkills.class).getSkillManager().getSkills().entrySet()) {
+        for (Entry<SkillType, Skill> entry : XPSkills.getInstance().getSkillManager().getSkills().entrySet()) {
             itemFactory.addLore(entry.getValue().describeYourself(playerData.getSkillLevel(entry.getKey()).orElse(0)));
         }
 

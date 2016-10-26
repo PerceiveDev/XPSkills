@@ -8,13 +8,11 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerExpChangeEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import com.perceivedev.perceivecore.util.TextUtils;
 import com.perceivedev.xpskills.XPSkills;
 import com.perceivedev.xpskills.api.SkillPointApplyEvent;
 import com.perceivedev.xpskills.api.SkillPointGainEvent;
-import com.perceivedev.xpskills.gui.PlayerSkillPointGui;
 import com.perceivedev.xpskills.managment.PlayerManager;
 import com.perceivedev.xpskills.skills.SkillType;
 
@@ -76,13 +74,15 @@ public class PlayerListener implements Listener {
 
     @EventHandler
     public void onGainPoint(SkillPointGainEvent e) {
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                System.out.println("PlayerListener.onGainPoint() + " + e);
-                new PlayerSkillPointGui(e.getPlayer().getUniqueId()).open(e.getPlayer());
-            }
-        }.runTaskLater(plugin, 20L);
+        // TODO: This is bad. It should not exist. It's annoying :P
+        /*
+         * new BukkitRunnable() {
+         * 
+         * @Override public void run() { System.out.println(
+         * "PlayerListener.onGainPoint() + " + e); new
+         * PlayerSkillPointGui(e.getPlayer().getUniqueId()).open(e.getPlayer());
+         * } }.runTaskLater(plugin, 20L);
+         */
     }
 
 }

@@ -11,6 +11,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import com.perceivedev.perceivecore.config.ConfigSerializable;
+import com.perceivedev.perceivecore.gui.component.ClickEvent;
 import com.perceivedev.xpskills.XPSkills;
 import com.perceivedev.xpskills.skills.Skill;
 import com.perceivedev.xpskills.skills.SkillType;
@@ -88,7 +89,7 @@ public class PlayerManager {
          * @return True if it could be applied
          */
         public boolean setSkill(SkillType skillType, int level) {
-            Optional<Skill> skillOptional = XPSkills.getPlugin(XPSkills.class).getSkillManager().getSkill(skillType);
+            Optional<Skill> skillOptional = XPSkills.getInstance().getSkillManager().getSkill(skillType);
             if (!skillOptional.isPresent()) {
                 return false;
             }
@@ -105,7 +106,7 @@ public class PlayerManager {
             skillMap.put(skillType, level);
 
             // apply if player is online
-            getPlayer().ifPresent(player -> XPSkills.getPlugin(XPSkills.class).getSkillManager().applySkill(skillType, player, level));
+            getPlayer().ifPresent(player -> XPSkills.getInstance().getSkillManager().applySkill(skillType, player, level));
             return true;
         }
 
@@ -140,7 +141,7 @@ public class PlayerManager {
             }
             skillMap.remove(skillType);
 
-            getPlayer().ifPresent(player -> XPSkills.getPlugin(XPSkills.class).getSkillManager().removeSkill(skillType, player));
+            getPlayer().ifPresent(player -> XPSkills.getInstance().getSkillManager().removeSkill(skillType, player));
         }
 
         /**
@@ -258,8 +259,18 @@ public class PlayerManager {
         /**
          * @return The player if he is online
          */
-        protected Optional<Player> getPlayer() {
+        public Optional<Player> getPlayer() {
             return Optional.ofNullable(Bukkit.getPlayer(playerID));
+        }
+
+        /**
+         * @param e the click event
+         * @param skill the skill to level up
+         * @return
+         */
+        public int useSkillPoint(ClickEvent e, SkillType skill) {
+            int amount = e.getClick().isShiftClick() ? 10 : 1;
+            return increaseSkill(skill, amount) ? amount : 0;
         }
     }
 
