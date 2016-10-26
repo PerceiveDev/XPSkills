@@ -257,7 +257,7 @@ public class PlayerManager {
         }
 
         /**
-         * @return The player if he is online
+         * @return The player if he/she (AVOIDANCE OF SEXISM) is online
          */
         public Optional<Player> getPlayer() {
             return Optional.ofNullable(Bukkit.getPlayer(playerID));
