@@ -88,6 +88,7 @@ public class PlayerSkillPointGui extends GUI {
         }
 
         return (Label) new Label(String.format("&6%s's Stats", player.getName())).setDisplayType(DisplayType.custom(itemFactory.build()));
+
     }
 
     private int getExpToNextLevel(Player player) {

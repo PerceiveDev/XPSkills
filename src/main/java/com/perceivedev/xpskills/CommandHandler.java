@@ -20,6 +20,7 @@ public class CommandHandler implements CommandExecutor {
 
     public CommandHandler(XPSkills plugin) {
         this.plugin = plugin;
+        plugin.getCommand("skill").setExecutor(this);
     }
 
     /*
