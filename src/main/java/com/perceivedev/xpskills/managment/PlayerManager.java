@@ -123,7 +123,8 @@ public class PlayerManager {
             if (getFreeSkillPoints() < levelIncrease) {
                 return false;
             }
-            if (setSkill(skillType, levelIncrease)) {
+            int prevLevel = getSkillLevel(skillType).orElse(0);
+            if (setSkill(skillType, prevLevel + levelIncrease)) {
                 freeSkillPoints -= levelIncrease;
                 return true;
             }
