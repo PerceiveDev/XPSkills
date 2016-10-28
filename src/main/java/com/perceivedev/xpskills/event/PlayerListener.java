@@ -47,7 +47,7 @@ public class PlayerListener implements Listener {
         }
     }
 
-    @EventHandler
+    // @EventHandler
     public void onHit(PlayerToggleSneakEvent event) {
         if (event.isSneaking()) {
             PlayerManager.PlayerData data = plugin.getPlayerManager().getData(event.getPlayer().getUniqueId());
