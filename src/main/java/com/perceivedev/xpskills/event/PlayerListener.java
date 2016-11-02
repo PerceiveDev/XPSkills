@@ -72,17 +72,4 @@ public class PlayerListener implements Listener {
         }
     }
 
-    @EventHandler
-    public void onGainPoint(SkillPointGainEvent e) {
-        // TODO: This is bad. It should not exist. It's annoying :P
-        /*
-         * new BukkitRunnable() {
-         * 
-         * @Override public void run() { System.out.println(
-         * "PlayerListener.onGainPoint() + " + e); new
-         * PlayerSkillPointGui(e.getPlayer().getUniqueId()).open(e.getPlayer());
-         * } }.runTaskLater(plugin, 20L);
-         */
-    }
-
 }
