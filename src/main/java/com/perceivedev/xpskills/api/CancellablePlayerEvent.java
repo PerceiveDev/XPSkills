@@ -28,8 +28,8 @@ public abstract class CancellablePlayerEvent extends PlayerEvent implements Canc
     @Override
     public String toString() {
         return "CancellablePlayerEvent{" +
-                  "player=" + getPlayer() +
-                  ", cancelled=" + cancelled +
-                  '}';
+                "player=" + getPlayer() +
+                ", cancelled=" + cancelled +
+                '}';
     }
 }

@@ -11,7 +11,7 @@ public class SkillPointGainEvent extends CancellablePlayerEvent {
 
     private static HandlerList handlers = new HandlerList();
 
-    private int skillPointAmount;
+    private int                skillPointAmount;
 
     public SkillPointGainEvent(Player who, int skillPointAmount) {
         super(who);
@@ -39,10 +39,10 @@ public class SkillPointGainEvent extends CancellablePlayerEvent {
     @Override
     public String toString() {
         return "SkillPointGainEvent{" +
-                  "cancelled=" + isCancelled() +
-                  ", player=" + getPlayer() +
-                  ", skillPointAmount=" + skillPointAmount +
-                  '}';
+                "cancelled=" + isCancelled() +
+                ", player=" + getPlayer() +
+                ", skillPointAmount=" + skillPointAmount +
+                '}';
     }
 
     @Override

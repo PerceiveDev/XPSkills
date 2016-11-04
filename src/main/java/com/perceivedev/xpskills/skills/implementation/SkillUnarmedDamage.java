@@ -30,14 +30,13 @@ public class SkillUnarmedDamage extends AbstractSkill {
      */
     public SkillUnarmedDamage(int maxLevel, double increasePerLevel, double increaseCap) {
         super(
-                maxLevel, "Unarmed Damage", 
-                increasePerLevel, 
+                maxLevel, "Unarmed Damage",
+                increasePerLevel,
                 increaseCap,
-                (skill, level) -> String.format("&7Unarmed: &6%d &7(&e+ %.2f %% &7Damage)", 
-                level, 
-                Math.min(level * increasePerLevel, increaseCap)),
-                ItemFactory.builder(Material.SKULL_ITEM).setDurability((short) 2).build()
-        );
+                (skill, level) -> String.format("&7Unarmed: &6%d &7(&e+ %.2f %% &7Damage)",
+                        level,
+                        Math.min(level * increasePerLevel, increaseCap)),
+                ItemFactory.builder(Material.SKULL_ITEM).setDurability((short) 2).build());
     }
 
     @Override
@@ -70,12 +69,11 @@ public class SkillUnarmedDamage extends AbstractSkill {
         event.setDamage(DamageModifier.BASE, event.getDamage() * increase);
 
         event.getDamager().sendMessage(TextUtils.colorize(String.format(
-                  "&8[&7%s&8, &7%d&8] &c%.2f &8(&2+ &a%.2f&8)",
-                  getIdentifier(),
-                  managedPlayers.get(event.getDamager().getUniqueId()),
-                  event.getDamage(),
-                  event.getDamage() - dmgBefore
-        )));
+                "&8[&7%s&8, &7%d&8] &c%.2f &8(&2+ &a%.2f&8)",
+                getIdentifier(),
+                managedPlayers.get(event.getDamager().getUniqueId()),
+                event.getDamage(),
+                event.getDamage() - dmgBefore)));
     }
 
     /**

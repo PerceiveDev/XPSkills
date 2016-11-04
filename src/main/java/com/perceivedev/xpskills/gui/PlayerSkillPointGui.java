@@ -9,10 +9,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
-import com.perceivedev.perceivecore.gui.DisplayType;
-import com.perceivedev.perceivecore.gui.GUI;
-import com.perceivedev.perceivecore.gui.component.Button;
-import com.perceivedev.perceivecore.gui.component.Label;
+import com.perceivedev.perceivecore.gui.Gui;
+import com.perceivedev.perceivecore.gui.components.implementation.component.simple.SimpleButton;
+import com.perceivedev.perceivecore.gui.components.implementation.component.simple.SimpleLabel;
+import com.perceivedev.perceivecore.gui.components.implementation.pane.AnchorPane;
 import com.perceivedev.perceivecore.util.ItemFactory;
 import com.perceivedev.perceivecore.util.TextUtils;
 import com.perceivedev.xpskills.XPSkills;
@@ -24,18 +24,18 @@ import com.perceivedev.xpskills.util.ProgressPrinter;
 /**
  * A simple Player skill point Gui
  */
-public class PlayerSkillPointGui extends GUI {
+public class PlayerSkillPointGui extends Gui {
 
     private ProgressPrinter printer = new ProgressPrinter("&8[", "&8]&r", "|", "|", "&a", "&7", 50);
 
     private UUID            playerID;
 
     // === COMPONENTS ===
-    private Label           playerSkillPoints;
-    private Label           playerStats;
+    private SimpleLabel     playerSkillPoints;
+    private SimpleLabel     playerStats;
 
     public PlayerSkillPointGui(UUID playerID) {
-        super("Gui", 6, DisplayType.EMPTY);
+        super("Gui", 6);
         this.playerID = playerID;
         init();
     }
@@ -45,28 +45,28 @@ public class PlayerSkillPointGui extends GUI {
 
         // player free skill points
         int skillPointAmount = playerData.getFreeSkillPoints();
-        playerSkillPoints = new Label(String.format("&6%d Skill Points", skillPointAmount), "&7Use Skill Points to", "&7upgrade your skills");
-        playerSkillPoints.setDisplayType(DisplayType.custom(Material.BOOK, 0, skillPointAmount));
+        playerSkillPoints = new SimpleLabel(String.format("&6%d Skill Points", skillPointAmount), "&7Use Skill Points to", "&7upgrade your skills");
+        playerSkillPoints.setDisplayType(c -> ItemFactory.builder(Material.BOOK));
 
-        addComponent(playerSkillPoints, 0, 0);
+        ((AnchorPane) getRootPane()).addComponent(playerSkillPoints, 0, 0);
 
         // player head with stats
         playerStats = createPlayerStats(playerData);
-        addComponent(playerStats, 8, 0);
+        ((AnchorPane) getRootPane()).addComponent(playerStats, 8, 0);
 
         // first row skills
         List<Entry<SkillType, Skill>> skills = new ArrayList<>(XPSkills.getInstance().getSkillManager().getSkills().entrySet());
 
         for (int i = 0; i < skills.size(); i++) {
-            Button button = createPlayerButton(playerData, skills.get(i));
-            addComponent(button, i + 1, 0);
+            SimpleButton button = createPlayerButton(playerData, skills.get(i));
+            ((AnchorPane) getRootPane()).addComponent(button, i + 1, 0);
         }
 
     }
 
-    private Button createPlayerButton(PlayerData playerData, Entry<SkillType, Skill> skillEntry) {
-        Button button = new Button(TextUtils.colorize(skillEntry.getValue().describeYourself(playerData.getSkillLevel(skillEntry.getKey()).orElse(0))));
-        button.setDisplayType(DisplayType.custom(skillEntry.getValue().getIcon()));
+    private SimpleButton createPlayerButton(PlayerData playerData, Entry<SkillType, Skill> skillEntry) {
+        SimpleButton button = new SimpleButton(TextUtils.colorize(skillEntry.getValue().describeYourself(playerData.getSkillLevel(skillEntry.getKey()).orElse(0))));
+        button.setDisplayType(c -> skillEntry.getValue().getIcon());
         button.setClickHandler((e) -> {
             int amount;
             if ((amount = playerData.useSkillPoint(e, skillEntry.getKey())) < 1) {
@@ -78,10 +78,10 @@ public class PlayerSkillPointGui extends GUI {
         return button;
     }
 
-    private Label createPlayerStats(PlayerData playerData) {
+    private SimpleLabel createPlayerStats(PlayerData playerData) {
 
-        Player player = getPlayer();
-        ItemFactory itemFactory = ItemFactory.builder(Material.SKULL_ITEM).setDurability((short) 3).setAmount(1).setSkullOwner(getPlayer());
+        Player player = getPlayer().orElse(Bukkit.getPlayer(playerID));
+        ItemFactory itemFactory = ItemFactory.builder(Material.SKULL_ITEM).setDurability((short) 3).setAmount(1).setSkullOwner(player);
 
         itemFactory.setLore(String.format("&7Level: &6%d", playerData.getLevel()));
         itemFactory.addLore(String.format("&7Next Level: &d%d XP", getExpToNextLevel(player)));
@@ -95,7 +95,10 @@ public class PlayerSkillPointGui extends GUI {
             itemFactory.addLore(entry.getValue().describeYourself(playerData.getSkillLevel(entry.getKey()).orElse(0)));
         }
 
-        return (Label) new Label(String.format("&6%s's Stats", player.getName())).setDisplayType(DisplayType.custom(itemFactory.build()));
+        SimpleLabel label = new SimpleLabel(String.format("&6%s's Stats", player.getName()));
+        label.setDisplayType(c -> itemFactory);
+
+        return label;
 
     }
 
@@ -103,7 +106,4 @@ public class PlayerSkillPointGui extends GUI {
         return (int) Math.ceil(player.getExpToLevel() - (player.getExpToLevel() * player.getExp()));
     }
 
-    private Player getPlayer() {
-        return Bukkit.getPlayer(playerID);
-    }
 }

@@ -23,14 +23,13 @@ public class SkillAttackSpeed extends AttributeModifyingSkill {
      */
     public SkillAttackSpeed(int maxLevel, double increasePerLevel, double increaseCap) {
         super(
-                maxLevel, 
-                "Attack Speed", 
-                increasePerLevel, 
-                increaseCap, 
-                Attribute.GENERIC_ATTACK_SPEED, 
+                maxLevel,
+                "Attack Speed",
+                increasePerLevel,
+                increaseCap,
+                Attribute.GENERIC_ATTACK_SPEED,
                 MODIFIER_ID,
                 "&7Attack Speed: &6%d &7(&e+ %.2f %% &7Attack Speed)",
-                ItemFactory.builder(Material.FEATHER).build()
-        );
+                ItemFactory.builder(Material.FEATHER).build());
     }
 }

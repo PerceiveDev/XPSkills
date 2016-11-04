@@ -11,7 +11,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import com.perceivedev.perceivecore.config.ConfigSerializable;
-import com.perceivedev.perceivecore.gui.component.ClickEvent;
+import com.perceivedev.perceivecore.gui.ClickEvent;
 import com.perceivedev.xpskills.XPSkills;
 import com.perceivedev.xpskills.skills.Skill;
 import com.perceivedev.xpskills.skills.SkillType;
@@ -270,7 +270,7 @@ public class PlayerManager {
          * @return
          */
         public int useSkillPoint(ClickEvent e, SkillType skill) {
-            int amount = e.getClick().isShiftClick() ? 10 : 1;
+            int amount = e.getClickType().isShiftClick() ? 10 : 1;
             return increaseSkill(skill, amount) ? amount : 0;
         }
     }

@@ -22,14 +22,13 @@ public class SkillHealthBoost extends AttributeModifyingSkill {
      */
     public SkillHealthBoost(int maxLevel, double increasePerLevel, double increaseCap) {
         super(
-                maxLevel, 
-                "Health Boost", 
-                increasePerLevel, 
-                increaseCap, 
-                Attribute.GENERIC_MAX_HEALTH, 
+                maxLevel,
+                "Health Boost",
+                increasePerLevel,
+                increaseCap,
+                Attribute.GENERIC_MAX_HEALTH,
                 UUID.fromString("fb7bd54c-a22e-4b18-8c39-4460727b2330"),
                 "&7hearts: &6%d &7(&e+ %.2f %% &7Hearts)",
-                ItemFactory.builder(Material.WOOL).setColour(DyeColor.RED).build()
-        );
+                ItemFactory.builder(Material.WOOL).setColour(DyeColor.RED).build());
     }
 }

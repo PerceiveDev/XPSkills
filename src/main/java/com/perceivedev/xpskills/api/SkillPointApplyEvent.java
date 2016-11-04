@@ -12,8 +12,8 @@ import com.perceivedev.xpskills.skills.SkillType;
 public class SkillPointApplyEvent extends CancellablePlayerEvent {
 
     private static HandlerList handlers = new HandlerList();
-    private SkillType skill;
-    private int       level;
+    private SkillType          skill;
+    private int                level;
 
     public SkillPointApplyEvent(Player player, SkillType skill, int level) {
         super(player);

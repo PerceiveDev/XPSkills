@@ -4,6 +4,7 @@ import java.util.function.BiFunction;
 
 import org.bukkit.inventory.ItemStack;
 
+import com.perceivedev.perceivecore.util.ItemFactory;
 import com.perceivedev.xpskills.skills.Skill;
 
 /**
@@ -23,10 +24,11 @@ public abstract class AbstractSkill implements Skill {
      * @param name The name of the skill
      * @param increaseCap The maximum increase
      * @param increasePerLevel The increase per level
-     * @param descriptionFunction A function generating a String describing the skill.
+     * @param descriptionFunction A function generating a String describing the
+     *            skill.
      */
     public AbstractSkill(int maxLevel, String name, double increasePerLevel, double increaseCap,
-              BiFunction<AbstractSkill, Integer, String> descriptionFunction, ItemStack icon) {
+            BiFunction<AbstractSkill, Integer, String> descriptionFunction, ItemStack icon) {
         this.maxLevel = maxLevel;
         this.name = name;
         this.increaseCap = increaseCap;
@@ -76,7 +78,7 @@ public abstract class AbstractSkill implements Skill {
     }
 
     @Override
-    public ItemStack getIcon() {
-        return icon.clone();
+    public ItemFactory getIcon() {
+        return ItemFactory.builder(icon);
     }
 }

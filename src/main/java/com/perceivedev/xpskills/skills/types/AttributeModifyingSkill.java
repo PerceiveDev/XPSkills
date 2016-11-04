@@ -24,17 +24,18 @@ public class AttributeModifyingSkill extends AbstractSkill {
      * @param increasePerLevel The increase per level
      * @param attribute The attribute to modify
      * @param modifierId The UUID of this modifier. Must be consistent.
-     * @param formatString The format String for {@link #describeYourself(int)}. First param is the level, second the increase
+     * @param formatString The format String for {@link #describeYourself(int)}.
+     *            First param is the level, second the increase
      * @param icon The Icon for this Skill
      */
     public AttributeModifyingSkill(int maxLevel, String name, double increasePerLevel, double increaseCap, Attribute attribute, UUID modifierId,
-              String formatString, ItemStack icon) {
+            String formatString, ItemStack icon) {
         super(maxLevel,
-                  name,
-                  increasePerLevel,
-                  increaseCap,
-                  (abstractSkill, level) -> String.format(formatString, level, Math.min(level * increasePerLevel, increaseCap)),
-                  icon);
+                name,
+                increasePerLevel,
+                increaseCap,
+                (abstractSkill, level) -> String.format(formatString, level, Math.min(level * increasePerLevel, increaseCap)),
+                icon);
 
         this.ATTRIBUTE = attribute;
         this.MODIFIER_ID = modifierId;
@@ -47,28 +48,29 @@ public class AttributeModifyingSkill extends AbstractSkill {
         removeEffect(player);
 
         player.getAttribute(ATTRIBUTE).addModifier(
-                  new AttributeModifier(
-                            MODIFIER_ID,
-                            getIdentifier(),
-                            increase,
-                            AttributeModifier.Operation.MULTIPLY_SCALAR_1   // else we decrease it
-                  )
-        );
-        // TODO: 22.10.2016 Remove 
+                new AttributeModifier(
+                        MODIFIER_ID,
+                        getIdentifier(),
+                        increase,
+                        AttributeModifier.Operation.MULTIPLY_SCALAR_1   // else
+                                                                        // we
+                                                                        // decrease
+                                                                        // it
+                ));
+        // TODO: 22.10.2016 Remove
         player.sendMessage(TextUtils.colorize(String.format(
-                  "&8[&7%s&8, &7%d&8] &c%.2f &8(&2+ &a%.2f&8)",
-                  getIdentifier(),
-                  level,
-                  player.getAttribute(ATTRIBUTE).getValue(),
-                  increase
-        )));
+                "&8[&7%s&8, &7%d&8] &c%.2f &8(&2+ &a%.2f&8)",
+                getIdentifier(),
+                level,
+                player.getAttribute(ATTRIBUTE).getValue(),
+                increase)));
     }
 
     @Override
     public void removeEffect(Player player) {
         player.getAttribute(ATTRIBUTE).getModifiers().stream()
-                  .filter(attributeModifier -> attributeModifier.getUniqueId().equals(MODIFIER_ID))
-                  .findAny()
-                  .ifPresent(attributeModifier -> player.getAttribute(ATTRIBUTE).removeModifier(attributeModifier));
+                .filter(attributeModifier -> attributeModifier.getUniqueId().equals(MODIFIER_ID))
+                .findAny()
+                .ifPresent(attributeModifier -> player.getAttribute(ATTRIBUTE).removeModifier(attributeModifier));
     }
 }

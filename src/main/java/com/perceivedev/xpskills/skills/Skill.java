@@ -2,9 +2,9 @@ package com.perceivedev.xpskills.skills;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
-import org.bukkit.inventory.ItemStack;
 
 import com.perceivedev.perceivecore.config.ConfigSerializable;
+import com.perceivedev.perceivecore.util.ItemFactory;
 
 /**
  * A skill
@@ -54,7 +54,7 @@ public interface Skill extends ConfigSerializable, Listener {
      *
      * @return The icon for this Skill
      */
-    ItemStack getIcon();
+    ItemFactory getIcon();
 
     default String getIdentifier() {
         return getName().toLowerCase().replace(" ", "_");

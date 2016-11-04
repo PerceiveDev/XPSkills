@@ -10,21 +10,22 @@ public class ProgressPrinter {
     private String prefix, suffix;
     private String filledString, unfilledString;
     private String filledPrefix, unfilledPrefix;
-    private int length;
+    private int    length;
 
     /**
      * @param prefix The prefix before the generated String
      * @param suffix The suffix after the generated String
      * @param filledString The string to use for filled "bars"
      * @param unfilledString The string to use for unfilled "bars"
-     * @param filledPrefix The prefix before the filled parts. May be used for formatting.
-     * @param unfilledPrefix The prefix before the unfilled parts. May be used for formatting.
+     * @param filledPrefix The prefix before the filled parts. May be used for
+     *            formatting.
+     * @param unfilledPrefix The prefix before the unfilled parts. May be used
+     *            for formatting.
      * @param length The length of the generated String
      */
-    public ProgressPrinter(String prefix, String suffix
-              , String filledString, String unfilledString,
-              String filledPrefix, String unfilledPrefix,
-              int length) {
+    public ProgressPrinter(String prefix, String suffix, String filledString, String unfilledString,
+            String filledPrefix, String unfilledPrefix,
+            int length) {
         this.prefix = prefix;
         this.suffix = suffix;
         this.filledString = filledString;
