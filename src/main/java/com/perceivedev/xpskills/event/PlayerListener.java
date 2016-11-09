@@ -1,6 +1,7 @@
 package com.perceivedev.xpskills.event;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Particle;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -9,6 +10,8 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerExpChangeEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
 
+import com.perceivedev.perceivecore.particle.effect.shapes.Helix;
+import com.perceivedev.perceivecore.particle.effect.shapes.Orientation;
 import com.perceivedev.perceivecore.util.TextUtils;
 import com.perceivedev.xpskills.XPSkills;
 import com.perceivedev.xpskills.api.SkillPointApplyEvent;
@@ -42,6 +45,7 @@ public class PlayerListener implements Listener {
                 plugin.getPlayerManager().getData(p.getUniqueId()).giveFreeSkillPoints(1);
 
                 // TODO: 23.10.2016 Send message?
+                new Helix(Orientation.VERTICAL, 0.25, Particle.END_ROD, 1.5, 2.0, 3.0).display(p.getLocation());
                 p.sendMessage(TextUtils.colorize(String.format("&6You were given &a%d &6skill points!", 1)));
             }
         }

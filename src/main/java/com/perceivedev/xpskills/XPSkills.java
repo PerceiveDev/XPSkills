@@ -28,6 +28,9 @@ public class XPSkills extends JavaPlugin {
 
         instance = this;
 
+        skillManager = new SkillManager();
+        playerManager = new PlayerManager(this);
+
         // Ensure the data loads properly
         if (!load()) {
             logger.severe("---------------------------");
@@ -38,9 +41,6 @@ public class XPSkills extends JavaPlugin {
             return;
         }
 
-        skillManager = new SkillManager();
-        playerManager = new PlayerManager(this);
-
         commandHandler = new CommandHandler(this);
 
         Bukkit.getPluginManager().registerEvents(new PlayerListener(this), this);
@@ -48,12 +48,29 @@ public class XPSkills extends JavaPlugin {
     }
 
     public boolean load() {
-        // TODO: Load configs n' stuff
+        try {
+            playerManager.load();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    public boolean save() {
+        try {
+            playerManager.save();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
         return true;
     }
 
     @Override
     public void onDisable() {
+        save();
+
         instance = null;
 
         logger.info(versionText() + " disabled");

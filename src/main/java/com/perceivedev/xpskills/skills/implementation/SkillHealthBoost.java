@@ -28,7 +28,7 @@ public class SkillHealthBoost extends AttributeModifyingSkill {
                 increaseCap,
                 Attribute.GENERIC_MAX_HEALTH,
                 UUID.fromString("fb7bd54c-a22e-4b18-8c39-4460727b2330"),
-                "&7hearts: &6%d &7(&e+ %.2f %% &7Hearts)",
+                "&7Health Boost: &6%d &7(&e+ %.2f %% &7Hearts)",
                 ItemFactory.builder(Material.WOOL).setColour(DyeColor.RED).build());
     }
 }

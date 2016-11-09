@@ -14,6 +14,7 @@ import com.perceivedev.perceivecore.gui.components.implementation.component.simp
 import com.perceivedev.perceivecore.gui.components.implementation.component.simple.SimpleLabel;
 import com.perceivedev.perceivecore.gui.components.implementation.pane.AnchorPane;
 import com.perceivedev.perceivecore.util.ItemFactory;
+import com.perceivedev.perceivecore.util.MathUtil;
 import com.perceivedev.perceivecore.util.TextUtils;
 import com.perceivedev.xpskills.XPSkills;
 import com.perceivedev.xpskills.managment.PlayerManager.PlayerData;
@@ -35,7 +36,9 @@ public class PlayerSkillPointGui extends Gui {
     private SimpleLabel     playerStats;
 
     public PlayerSkillPointGui(UUID playerID) {
-        super("Gui", 6);
+        // Size is based on number of Skills plus an extra slot for the player
+        // head
+        super("Gui", MathUtil.clamp((int) Math.ceil((XPSkills.getInstance().getSkillManager().getSkills().size() + 2) / 9), 1, 6));
         this.playerID = playerID;
         init();
     }
@@ -52,14 +55,14 @@ public class PlayerSkillPointGui extends Gui {
 
         // player head with stats
         playerStats = createPlayerStats(playerData);
-        ((AnchorPane) getRootPane()).addComponent(playerStats, 8, 0);
+        ((AnchorPane) getRootPane()).addComponent(playerStats, getRootPane().getWidth() - 1, getRootPane().getHeight() - 1);
 
         // first row skills
         List<Entry<SkillType, Skill>> skills = new ArrayList<>(XPSkills.getInstance().getSkillManager().getSkills().entrySet());
 
-        for (int i = 0; i < skills.size(); i++) {
-            SimpleButton button = createPlayerButton(playerData, skills.get(i));
-            ((AnchorPane) getRootPane()).addComponent(button, i + 1, 0);
+        for (int i = 1; i <= skills.size(); i++) {
+            SimpleButton button = createPlayerButton(playerData, skills.get(i - 1));
+            ((AnchorPane) getRootPane()).addComponent(button, i % 9, i / 9);
         }
 
     }

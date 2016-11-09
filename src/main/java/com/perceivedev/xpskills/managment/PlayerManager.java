@@ -1,16 +1,20 @@
 package com.perceivedev.xpskills.managment;
 
+import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.OptionalInt;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
 import com.perceivedev.perceivecore.config.ConfigSerializable;
+import com.perceivedev.perceivecore.config.SerializationManager;
 import com.perceivedev.perceivecore.gui.ClickEvent;
 import com.perceivedev.xpskills.XPSkills;
 import com.perceivedev.xpskills.skills.Skill;
@@ -21,10 +25,9 @@ import com.perceivedev.xpskills.skills.SkillType;
  */
 public class PlayerManager {
 
-    private HashMap<UUID, PlayerData> data = new HashMap<>();
+    private Map<UUID, PlayerData> data = new HashMap<>();
 
-    @SuppressWarnings("unused")
-    private XPSkills                  plugin;
+    private XPSkills              plugin;
 
     /**
      * Creates a new PlayerManager for the plugin
@@ -33,6 +36,20 @@ public class PlayerManager {
      */
     public PlayerManager(XPSkills plugin) {
         this.plugin = plugin;
+    }
+
+    public void load() {
+        YamlConfiguration config = YamlConfiguration.loadConfiguration(plugin.getFile("plugins.yml"));
+        data = config.getKeys(false).stream()
+                .filter(key -> config.isConfigurationSection(key))
+                .map(key -> SerializationManager.deserialize(PlayerData.class, config.getConfigurationSection(key)))
+                .collect(Collectors.toMap(data -> data.playerID, data -> data));
+    }
+
+    public void save() throws IOException {
+        YamlConfiguration config = new YamlConfiguration();
+        data.entrySet().stream().forEach(entry -> config.set(entry.getKey().toString(), SerializationManager.serialize(entry.getValue())));
+        config.save(plugin.getFile("players.yml"));
     }
 
     /**
