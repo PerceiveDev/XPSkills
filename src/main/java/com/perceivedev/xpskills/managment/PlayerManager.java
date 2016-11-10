@@ -39,16 +39,17 @@ public class PlayerManager {
     }
 
     public void load() {
-        YamlConfiguration config = YamlConfiguration.loadConfiguration(plugin.getFile("plugins.yml"));
+        YamlConfiguration config = YamlConfiguration.loadConfiguration(plugin.getFile("players.yml"));
         data = config.getKeys(false).stream()
-                .filter(key -> config.isConfigurationSection(key))
+                .filter(config::isConfigurationSection)
                 .map(key -> SerializationManager.deserialize(PlayerData.class, config.getConfigurationSection(key)))
                 .collect(Collectors.toMap(data -> data.playerID, data -> data));
     }
 
     public void save() throws IOException {
         YamlConfiguration config = new YamlConfiguration();
-        data.entrySet().stream().forEach(entry -> config.set(entry.getKey().toString(), SerializationManager.serialize(entry.getValue())));
+        data.entrySet().forEach(entry -> config.set(entry.getKey().toString(), SerializationManager.serialize(entry.getValue())));
+
         config.save(plugin.getFile("players.yml"));
     }
 
@@ -87,6 +88,12 @@ public class PlayerManager {
 
         private int                     freeSkillPoints;
         private int                     level;
+
+        /**
+         * For serializing
+         */
+        private PlayerData() {
+        }
 
         /**
          * @param playerID The {@link UUID} of the player
@@ -284,6 +291,7 @@ public class PlayerManager {
         /**
          * @param e the click event
          * @param skill the skill to level up
+         *
          * @return
          */
         public int useSkillPoint(ClickEvent e, SkillType skill) {
