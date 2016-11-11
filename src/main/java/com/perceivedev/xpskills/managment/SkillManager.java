@@ -1,7 +1,7 @@
 package com.perceivedev.xpskills.managment;
 
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -23,15 +23,15 @@ import com.perceivedev.xpskills.skills.implementation.SkillUnarmedDamage;
  */
 public class SkillManager {
 
-    private Map<SkillType, Skill> skillTypeMap = new HashMap<>();
+    private Map<SkillType, Skill> skillTypeMap = new LinkedHashMap<>();
 
     {
         // register default skills
 
         registerSkillType(SkillType.ATTACK_DAMAGE, new SkillAttackDamage(200, 0.1, 20));
         registerSkillType(SkillType.ATTACK_SPEED, new SkillAttackSpeed(200, 0.1, 20));
-        registerSkillType(SkillType.HEALTH_BOOST, new SkillHealthBoost(200, 0.01, 10));
         registerSkillType(SkillType.UNARMED_DAMAGE, new SkillUnarmedDamage(200, 0.01, 20));
+        registerSkillType(SkillType.HEALTH_BOOST, new SkillHealthBoost(200, 0.01, 10));
     }
 
     /**
