@@ -10,9 +10,9 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
 import com.perceivedev.perceivecore.gui.Gui;
-import com.perceivedev.perceivecore.gui.components.implementation.component.simple.SimpleButton;
-import com.perceivedev.perceivecore.gui.components.implementation.component.simple.SimpleLabel;
-import com.perceivedev.perceivecore.gui.components.implementation.pane.AnchorPane;
+import com.perceivedev.perceivecore.gui.components.panes.AnchorPane;
+import com.perceivedev.perceivecore.gui.components.simple.SimpleButton;
+import com.perceivedev.perceivecore.gui.components.simple.SimpleLabel;
 import com.perceivedev.perceivecore.util.ItemFactory;
 import com.perceivedev.perceivecore.util.MathUtil;
 import com.perceivedev.perceivecore.util.TextUtils;
@@ -72,10 +72,15 @@ public class PlayerSkillPointGui extends Gui {
         button.setDisplayType(c -> skillEntry.getValue().getIcon());
         button.setClickHandler((e) -> {
             int amount;
-            if ((amount = playerData.useSkillPoint(e, skillEntry.getKey())) < 1) {
+            if ((amount = playerData.useSkillPoint(e, skillEntry.getKey())) > 0) {
                 // TODO: I swear, we really need to set up some translations...
                 // this is UGLY AS FRACK
-                playerData.getPlayer().ifPresent(player -> player.sendMessage(TextUtils.colorize(String.format("&7Leveled &6%s &7up &6%d &7times", skillEntry.getValue().getName(), amount))));
+                playerData.getPlayer().ifPresent(player -> {
+                    player.sendMessage(TextUtils.colorize(String.format("&7Leveled &6%s &7up &6%d &7times", skillEntry.getValue().getName(), amount)));
+                });
+                // TODO: This is a bad solution, and I believe it violates DRY
+                button.setName(TextUtils.colorize(skillEntry.getValue().describeYourself(playerData.getSkillLevel(skillEntry.getKey()).orElse(0))));
+                e.getLastPane().requestReRender();
             }
         });
         return button;
