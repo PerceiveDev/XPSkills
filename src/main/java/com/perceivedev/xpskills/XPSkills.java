@@ -1,11 +1,15 @@
 package com.perceivedev.xpskills;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.logging.Logger;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.perceivedev.perceivecore.language.I18N;
 import com.perceivedev.xpskills.event.PlayerListener;
 import com.perceivedev.xpskills.managment.PlayerManager;
 import com.perceivedev.xpskills.managment.SkillManager;
@@ -22,11 +26,15 @@ public class XPSkills extends JavaPlugin {
     private PlayerManager   playerManager;
     private SkillManager    skillManager;
 
+    private I18N            language;
+
     @Override
     public void onEnable() {
         logger = getLogger();
 
         instance = this;
+
+        setupLanguage();
 
         skillManager = new SkillManager();
         playerManager = new PlayerManager(this);
@@ -45,6 +53,22 @@ public class XPSkills extends JavaPlugin {
 
         Bukkit.getPluginManager().registerEvents(new PlayerListener(this), this);
         logger.info(versionText() + " enabled");
+    }
+
+    private void setupLanguage() {
+        Path output = getDataFolder().toPath().resolve("language");
+
+        if (Files.notExists(output)) {
+            try {
+                Files.createDirectories(output);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        I18N.copyDefaultFiles("language", output, false, getFile());
+
+        language = new I18N(this, "language");
     }
 
     public boolean load() {
@@ -108,6 +132,15 @@ public class XPSkills extends JavaPlugin {
      */
     public static XPSkills getInstance() {
         return instance;
+    }
+
+    /**
+     * @param key
+     * @param formattingObjects
+     * @return
+     */
+    public String tr(String key, Object... formattingObjects) {
+        return language.tr(key, formattingObjects);
     }
 
 }
