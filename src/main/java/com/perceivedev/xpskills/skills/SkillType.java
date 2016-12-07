@@ -20,6 +20,10 @@ public enum SkillType {
     /**
      * Increases the player's unarmed (with bare hands) damage
      */
-    UNARMED_DAMAGE
+    UNARMED_DAMAGE,
+    /**
+     * Increases the experience you get
+     */
+    EXPERIENCE_AMPLIFIER
 
 }

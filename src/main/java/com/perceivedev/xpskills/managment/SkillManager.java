@@ -13,6 +13,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.perceivedev.xpskills.XPSkills;
 import com.perceivedev.xpskills.skills.Skill;
 import com.perceivedev.xpskills.skills.SkillType;
+import com.perceivedev.xpskills.skills.implementation.SkillAmplifyXp;
 import com.perceivedev.xpskills.skills.implementation.SkillAttackDamage;
 import com.perceivedev.xpskills.skills.implementation.SkillAttackSpeed;
 import com.perceivedev.xpskills.skills.implementation.SkillHealthBoost;
@@ -32,6 +33,7 @@ public class SkillManager {
         registerSkillType(SkillType.ATTACK_SPEED, new SkillAttackSpeed(200, 0.1, 20));
         registerSkillType(SkillType.UNARMED_DAMAGE, new SkillUnarmedDamage(200, 0.01, 20));
         registerSkillType(SkillType.HEALTH_BOOST, new SkillHealthBoost(200, 0.01, 10));
+        registerSkillType(SkillType.EXPERIENCE_AMPLIFIER, new SkillAmplifyXp(200, 0.01, 10));
     }
 
     /**
